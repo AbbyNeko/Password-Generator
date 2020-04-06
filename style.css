@@ -1,0 +1,23 @@
+
+/* Password Generator */
+
+textarea {
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 1.5em;
+    min-height: 10em;
+    margin-top: 3.5em;
+    text-align: center;
+}
+
+section.password-generator {
+    margin-top: 2em;;
+}
+
+.pw-generator-btn {
+    margin-top: 1em;
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+}
