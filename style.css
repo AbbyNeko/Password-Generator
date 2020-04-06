@@ -15,7 +15,7 @@ section.password-generator {
     margin-top: 2em;;
 }
 
-.pw-generator-btn {
+#pw-generator-btn {
     margin-top: 1em;
     display: block;
     margin-right: auto;
