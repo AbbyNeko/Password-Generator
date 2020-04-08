@@ -1,7 +1,7 @@
 
 document.getElementById("pw-generator-btn").addEventListener("click", function(event){
-    askingForPasswordReq()
-    event.preventDefault()
+    askingForPasswordReq();
+    event.preventDefault();
   });
 
     //Generate PW based on requirements given by user
@@ -51,24 +51,42 @@ document.getElementById("pw-generator-btn").addEventListener("click", function(e
     
     }
 
+
+//Prompts User for requirements of Password
 function askingForPasswordReq() {
 
             //prompt asking for Length of password
             var pwLength = prompt("What is the length of your new password? It must be at least 8 characters and no more than 128 characters.");
 
-            if(pwLength != null) {
-                pwLength = parseInt(pwLength);
-            }
+            //Continues to check if input is less than 8, greater than 128 or empty/NaN. If so, show warning and ask prompt again
+            do{
+                
+                if(parseInt(pwLength) < 8 || parseInt(pwLength) > 128) {
+                    alert("Length of Password was less than 8 or greater than 128. Please enter a different password length.");
+                    pwLength = prompt("What is the length of your new password? It must be at least 8 characters and no more than 128 characters.");
+                }
 
+                if(pwLength == "" || Number.isNaN(parseInt(pwLength))) {
+                    alert("Please enter a number!");
+                    pwLength = prompt("What is the length of your new password? It must be at least 8 characters and no more than 128 characters.");
+                }
+    
+
+            } while(parseInt(pwLength) < 8 || parseInt(pwLength) > 128 || pwLength == "" || Number.isNaN(parseInt(pwLength)))
+
+            pwLength = parseInt(pwLength);
+
+            
             //Prompt asking for which Character types to include in password
-            var characterTypesStr = prompt("Which character types do you want to include in your new password? Separate each type with a comma.")
+            var characterTypesStr = prompt("Which character types do you want to include in your new password? Separate each type with a comma. Types include numeric, uppercase, lowercase and special characters.")
 
                 characterTypesStr = characterTypesStr.toLowerCase();
 
                 var characterTypeArr = characterTypesStr.split(',');
 
+
             //Pass on parameters to generatePassword function
-            var newPassword;
+            var newPassword = null;
 
             newPassword = generatePassword(characterTypeArr, pwLength);
             
