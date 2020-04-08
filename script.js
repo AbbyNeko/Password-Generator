@@ -11,7 +11,7 @@ document.getElementById("pw-generator-btn").addEventListener("click", function(e
     
                 var newPassword = '';
     
-                console.log(characterChoices);
+                //console.log(characterChoices);
     
                 for(var n = 0; n < pwLength; n++) {
     
