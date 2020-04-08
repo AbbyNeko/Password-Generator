@@ -6,46 +6,22 @@ document.getElementById("pw-generator-btn").addEventListener("click", function(e
 
     //Generate PW based on requirements given by user
 
-    function generatePassword(characterTypeArr, pwLength) {
+    function generatePassword(characterChoices, pwLength) {
 
     
-                var lowerCaseStr, upperCaseStr, specialCharStr, numericStr, characterChoices;
                 var newPassword = '';
-
-                characterChoices = '';
-                upperCaseStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-                lowerCaseStr = "abcdefghijklmnopqrstuvwxyz";
-                numericStr = "0123456789";
-                specialCharStr = "!\"$#%&)(*+,-./:;<>=?@[]\^_{}|~'";
-    
-                //loop through character type array and add onto character choices string
-    
-                for(var i = 0; i < characterTypeArr.length; i++) {
-    
-                        if(characterTypeArr[i].trim() == "uppercase"){
-                            characterChoices += upperCaseStr;
-                        }else if(characterTypeArr[i].trim()  == "lowercase") {
-                            characterChoices += lowerCaseStr;
-                        }else if(characterTypeArr[i].trim()  == "numeric") {
-                            characterChoices += numericStr;
-                        }else if(characterTypeArr[i].trim()  == "special characters") {
-                            characterChoices += specialCharStr;
-                        }
-    
-                }
     
                 console.log(characterChoices);
-                console.log('length - '+characterChoices.length);
     
                 for(var n = 0; n < pwLength; n++) {
     
                     var randomSelector = Math.floor(Math.random() * characterChoices.length);
-                    console.log('random index - '+randomSelector);
+                    //console.log('random index - '+randomSelector);
                     newPassword += characterChoices[randomSelector];
     
                 }
 
-                console.log('new pw - '+newPassword);
+                //console.log('new pw - '+newPassword);
     
                 return newPassword;
     
@@ -78,17 +54,72 @@ function askingForPasswordReq() {
 
             
             //Prompt asking for which Character types to include in password
-            var characterTypesStr = prompt("Which character types do you want to include in your new password? Separate each type with a comma. Types include numeric, uppercase, lowercase and special characters.")
+            var characterTypesStr = prompt("Which character types do you want to include in your new password? Separate each type with a comma. Types include numeric, uppercase, lowercase and special characters.");
+             
+
+             var lowerCaseStr, upperCaseStr, specialCharStr, numericStr, characterChoices, characterTypeArr;
+
+                characterChoices = '';
+                upperCaseStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                lowerCaseStr = "abcdefghijklmnopqrstuvwxyz";
+                numericStr = "0123456789";
+                specialCharStr = "!\"$#%&)(*+,-./:;<>=?@[]\^_{}|~'";
 
                 characterTypesStr = characterTypesStr.toLowerCase();
+                characterTypeArr = characterTypesStr.split(',');
 
-                var characterTypeArr = characterTypesStr.split(',');
+                //console.log("character type arr - "+JSON.stringify(characterTypeArr));
 
+                //loop through character type array and add onto character choices string
+
+                for(var i = 0; i < characterTypeArr.length; i++) {
+        
+                        if(characterTypeArr[i].trim() == "uppercase"){
+                            characterChoices += upperCaseStr;
+                        }else if(characterTypeArr[i].trim()  == "lowercase") {
+                            characterChoices += lowerCaseStr;
+                        }else if(characterTypeArr[i].trim()  == "numeric") {
+                            characterChoices += numericStr;
+                        }else if(characterTypeArr[i].trim()  == "special characters") {
+                            characterChoices += specialCharStr;
+                        }
+
+                }
+
+                //console.log('choices - '+characterChoices);
+                //console.log('choices length - '+characterChoices.length);
+
+                //If no valid character types are detected, show alert that no valid type was entered and show prompt again
+                while(characterChoices.length <= 0) {
+
+                    alert("Please enter at least one valid Character Type.");
+                    characterTypesStr = prompt("Which character types do you want to include in your new password? Separate each type with a comma. Types include numeric, uppercase, lowercase and special characters.");
+
+                    characterTypesStr = characterTypesStr.toLowerCase();
+                    characterTypeArr = characterTypesStr.split(',');
+
+                    //loop through character type array and add onto character choices string
+    
+                    for(var i = 0; i < characterTypeArr.length; i++) {
+            
+                            if(characterTypeArr[i].trim() == "uppercase"){
+                                characterChoices += upperCaseStr;
+                            }else if(characterTypeArr[i].trim()  == "lowercase") {
+                                characterChoices += lowerCaseStr;
+                            }else if(characterTypeArr[i].trim()  == "numeric") {
+                                characterChoices += numericStr;
+                            }else if(characterTypeArr[i].trim()  == "special characters") {
+                                characterChoices += specialCharStr;
+                            }
+
+                    }
+
+                }  
 
             //Pass on parameters to generatePassword function
-            var newPassword = null;
+            var newPassword = '';
 
-            newPassword = generatePassword(characterTypeArr, pwLength);
+            newPassword = generatePassword(characterChoices, pwLength);
             
             //Display new password in text area
             document.getElementById('new-pw-text').innerHTML = newPassword;
