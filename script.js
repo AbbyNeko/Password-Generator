@@ -4,29 +4,27 @@ document.getElementById("pw-generator-btn").addEventListener("click", function(e
     event.preventDefault();
   });
 
-    //Generate PW based on requirements given by user
+//Generate PW based on requirements given by user
 
-    function generatePassword(characterChoices, pwLength) {
+function generatePassword(characterChoices, pwLength) {
 
-    
-                var newPassword = '';
-    
-                //console.log(characterChoices);
-    
-                for(var n = 0; n < pwLength; n++) {
-    
-                    var randomSelector = Math.floor(Math.random() * characterChoices.length);
-                    //console.log('random index - '+randomSelector);
-                    newPassword += characterChoices[randomSelector];
-    
-                }
+            var newPassword = '';
 
-                //console.log('new pw - '+newPassword);
-    
-                return newPassword;
-    
+            //console.log(characterChoices);
+
+            for(var n = 0; n < pwLength; n++) {
+
+                var randomSelector = Math.floor(Math.random() * characterChoices.length);
+                //console.log('random index - '+randomSelector);
+                newPassword += characterChoices[randomSelector];
+
+            }
+
+            //console.log('new pw - '+newPassword);
+
+            return newPassword;
+
     }
-
 
 //Prompts User for requirements of Password
 function askingForPasswordReq() {
@@ -52,11 +50,9 @@ function askingForPasswordReq() {
 
             pwLength = parseInt(pwLength);
 
-            
             //Prompt asking for which Character types to include in password
             var characterTypesStr = prompt("Which character types do you want to include in your new password? Separate each type with a comma. Types include numeric, uppercase, lowercase and special characters.");
              
-
              var lowerCaseStr, upperCaseStr, specialCharStr, numericStr, characterChoices, characterTypeArr;
 
                 characterChoices = '';
@@ -123,7 +119,6 @@ function askingForPasswordReq() {
             
             //Display new password in text area
             document.getElementById('new-pw-text').innerHTML = newPassword;
-
 
 }
 
