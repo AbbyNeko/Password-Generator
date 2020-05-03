@@ -51,7 +51,7 @@ function askingForPasswordReq() {
             pwLength = parseInt(pwLength);
 
             //Prompt asking for which Character types to include in password
-            var characterTypesStr = prompt("Which character types do you want to include in your new password? Separate each type with a comma. Types include numeric, uppercase, lowercase and special characters.");
+            var characterTypesStr = prompt("Which character types do you want to include in your new password? Please type in the following choices and separate each type with a comma: 'numeric', 'uppercase', 'lowercase' and 'special characters'.");
              
              var lowerCaseStr, upperCaseStr, specialCharStr, numericStr, characterChoices, characterTypeArr;
 
