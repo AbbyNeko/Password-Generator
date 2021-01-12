@@ -11,6 +11,13 @@ textarea {
     text-align: center;
 }
 
+input[type='text'] {
+    display:block;
+    margin:auto;
+    width:80%;
+    margin-bottom:20px;
+}
+
 section.password-generator {
     margin-top: 2em;;
 }

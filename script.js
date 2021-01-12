@@ -1,11 +1,15 @@
-
+//event listener for Generate Password button
 document.getElementById("pw-generator-btn").addEventListener("click", function(event){
-    askingForPasswordReq();
+    var prompt = "What is the length of your new password? It must be at least 8 characters and no more than 128 characters.";
+    $('#question').text(prompt);
+    $('#promptModal').modal();
     event.preventDefault();
   });
 
-//Generate PW based on requirements given by user
+var pwLength = 0;
+var characterChoices = '';
 
+//Generate PW based on requirements given by user
 function generatePassword(characterChoices, pwLength) {
 
             var newPassword = '';
@@ -29,33 +33,63 @@ function generatePassword(characterChoices, pwLength) {
 //Prompts User for requirements of Password
 function askingForPasswordReq() {
 
-            //prompt asking for Length of password
-            var pwLength = prompt("What is the length of your new password? It must be at least 8 characters and no more than 128 characters.");
+    var prompt = $('#question').text();
 
-            //Continues to check if input is less than 8, greater than 128 or empty/NaN. If so, show warning and ask prompt again
-            do{
-                
-                if(parseInt(pwLength) < 8 || parseInt(pwLength) > 128) {
-                    alert("Length of Password was less than 8 or greater than 128. Please enter a different password length.");
-                    pwLength = prompt("What is the length of your new password? It must be at least 8 characters and no more than 128 characters.");
-                }
+    switch(prompt) {
+        case "What is the length of your new password? It must be at least 8 characters and no more than 128 characters.":
+            handlePwLength();
+            break;
+        case "Which character types do you want to include in your new password? Please type in the following choices and separate each type with a comma: 'numeric', 'uppercase', 'lowercase' and 'special characters'.":
+            handleCharType();
+    }
+ 
+}
 
-                if(pwLength == "" || Number.isNaN(parseInt(pwLength))) {
-                    alert("Please enter a number!");
-                    pwLength = prompt("What is the length of your new password? It must be at least 8 characters and no more than 128 characters.");
-                }
-    
+//handles user errors for length prompt. Save answers and goes on to next prompt
+function handlePwLength() {
+               var prompt = '';
+               var response = '';
+               pwLength = $("#answer").val();
+               //console.log('answer - '+pwLength);
+   
+               //Continues to check if input is less than 8, greater than 128 or empty/NaN. If so, show warning and ask prompt again
+               //do{
+                   
+                   if(parseInt(pwLength) < 8 || parseInt(pwLength) > 128) {
+                       response = "Length of Password was less than 8 or greater than 128. Please enter a different password length.";
+                       prompt = "What is the length of your new password? It must be at least 8 characters and no more than 128 characters.";
+                   }else if(pwLength == "" || Number.isNaN(parseInt(pwLength))) {
+                       response = "Please enter a number!";
+                       prompt = "What is the length of your new password? It must be at least 8 characters and no more than 128 characters.";
+                   } else {
+                        //Prompt asking for which Character types to include in password
+                       prompt = "Which character types do you want to include in your new password? Please type in the following choices and separate each type with a comma: 'numeric', 'uppercase', 'lowercase' and 'special characters'.";
+                   }
+   
+                   //console.log(response);
+                   //console.log(prompt);
+   
+                   $("#response").text(response);
+                   $("#question").text(prompt);
+   
+                   pwLength = parseInt(pwLength);
 
-            } while(parseInt(pwLength) < 8 || parseInt(pwLength) > 128 || pwLength == "" || Number.isNaN(parseInt(pwLength)))
+                   //clear answer
+                   $('#answer').val('');
+   
+}
 
-            pwLength = parseInt(pwLength);
+//generates valid character types according to answer for character type and generate new pw
+function handleCharType() {
 
-            //Prompt asking for which Character types to include in password
-            var characterTypesStr = prompt("Which character types do you want to include in your new password? Please type in the following choices and separate each type with a comma: 'numeric', 'uppercase', 'lowercase' and 'special characters'.");
-             
-             var lowerCaseStr, upperCaseStr, specialCharStr, numericStr, characterChoices, characterTypeArr;
+                var lowerCaseStr, upperCaseStr, specialCharStr, numericStr, characterTypeArr;
+                var characterTypesStr = $('#answer').val();
 
-                characterChoices = '';
+                //console.log('characterTypesStr - '+characterTypesStr);
+
+                var prompt = '';
+                var response = '';
+
                 upperCaseStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
                 lowerCaseStr = "abcdefghijklmnopqrstuvwxyz";
                 numericStr = "0123456789";
@@ -86,10 +120,13 @@ function askingForPasswordReq() {
                 //console.log('choices length - '+characterChoices.length);
 
                 //If no valid character types are detected, show alert that no valid type was entered and show prompt again
-                while(characterChoices.length <= 0) {
+                if(characterChoices.length <= 0) {
 
-                    alert("Please enter at least one valid Character Type.");
-                    characterTypesStr = prompt("Which character types do you want to include in your new password? Separate each type with a comma. Types include numeric, uppercase, lowercase and special characters.");
+                    response = "Please enter at least one valid Character Type.";
+                    prompt = "Which character types do you want to include in your new password? Separate each type with a comma. Types include numeric, uppercase, lowercase and special characters.";
+
+                    $("#response").text(response);
+                    $("#question").text(prompt);
 
                     characterTypesStr = characterTypesStr.toLowerCase();
                     characterTypeArr = characterTypesStr.split(',');
@@ -110,15 +147,29 @@ function askingForPasswordReq() {
 
                     }
 
-                }  
+                } else {
+                    //console.log('generating new pw');
 
-            //Pass on parameters to generatePassword function
-            var newPassword = '';
+                    var newPassword = generatePassword(characterChoices, pwLength);
 
-            newPassword = generatePassword(characterChoices, pwLength);
-            
-            //Display new password in text area
-            document.getElementById('new-pw-text').innerHTML = newPassword;
+                        //console.log('new pw - '+newPassword);
+
+                        //Display new password in text area
+                        document.getElementById('new-pw-text').innerHTML = newPassword;
+
+                        //hide modal
+                        $('#promptModal').modal('hide');
+
+                        //resetting prompt
+                        var prompt = "What is the length of your new password? It must be at least 8 characters and no more than 128 characters.";
+                        $('#question').text(prompt);
+                        $('#response').text('');
+                        $('#answer').val('');
+
+                        //resets global variables
+                        characterChoices = '';
+                        pwLength = 0;
+                }
 
 }
 
