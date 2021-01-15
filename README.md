@@ -11,3 +11,17 @@ AS AN employee with access to sensitive data
 I WANT to randomly generate a password that meets certain criteria
 SO THAT I can create a strong password that provides greater security
 ```
+
+## Instructions on How to Generate a Password
+
+1. Press "Generate Password" and a modal will appear to ask you for the password length. You must enter a number from 8 to 128.
+
+![image](https://github.com/AbbyNeko/Password-Generator/public/img/Step1.png)
+
+2. Press "Submit" to go onto the next prompt. A new question will appear asking for the character types you want to include in your password. You must enter the character types exactly as the options are presented and each option you choose must be separated by a comma as seen below.
+
+![image](https://github.com/AbbyNeko/Password-Generator/public/img/Step2.png)
+
+3. After you submit the last question, the modal will close and your new password will generate in the text area field as shown below.
+
+![image](https://github.com/AbbyNeko/Password-Generator/public/img/Step3.png)
